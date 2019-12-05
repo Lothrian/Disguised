@@ -29,9 +29,15 @@ public class PlayerMovement : MonoBehaviour
       //  animator.setTrigger("standing");
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            animator.SetBool("standing", false);
             isGrounded = false;
             rb.AddForce(new Vector3(0.0f, 6.0f, 0.0f), ForceMode.Impulse);
+        }
+        if (transform.position.y > 3)
+        {
+            animator.SetBool("is_jumping", true);
+        } else
+        {
+            animator.SetBool("is_jumping", false);
         }
     }
 
@@ -60,11 +66,11 @@ public class PlayerMovement : MonoBehaviour
         }
         rb.velocity = new Vector3(move * runSpeed, rb.velocity.y, 0);
         if (rb.velocity.x != 0) {
-            animator.SetBool("standing", false);
+            animator.SetBool("is_running", true);
         }
         else
         {
-            animator.SetBool("standing", true);
+            animator.SetBool("is_running", false);
         }
     }
 
