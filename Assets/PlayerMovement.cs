@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     public bool isGrounded;
     private Animator animator;
-    float dir = 1;
+    string dir = "right";
 
     // Start is called before the first frame update
     void Start()
@@ -43,12 +43,23 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         float move = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector3(move * runSpeed, rb.velocity.y, 0);
-        if (move < 0 && dir > 0 || move > 0 ) {
-            transform.RotateAround(transform.position, transform.up, 180f);
+        if (Input.GetKeyDown("a")) {
+            if (dir.Equals("right"))
+            {
+                transform.RotateAround(transform.position, transform.up, 180f);
+            }
+            dir = "left";
         }
-        if (rb.velocity.x != 0)
+        if (Input.GetKeyDown("d"))
         {
+            if (dir.Equals("left"))
+            {
+                transform.RotateAround(transform.position, transform.up, 180f);
+            }
+            dir = "right";
+        }
+        rb.velocity = new Vector3(move * runSpeed, rb.velocity.y, 0);
+        if (rb.velocity.x != 0) {
             animator.SetBool("standing", false);
         }
         else
